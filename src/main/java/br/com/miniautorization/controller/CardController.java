@@ -24,8 +24,11 @@ public class CardController implements CardResource {
 
     @Override
     public ResponseEntity<BigDecimal> getBalanceCard(Long numberCard) {
-
-        return null;
+        Optional<NewCardView> newCardView = cardService.findByNumberCard(numberCard);
+        if(newCardView.isPresent()) {
+            return ResponseEntity.ok(newCardView.get().getBalanceCard());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
