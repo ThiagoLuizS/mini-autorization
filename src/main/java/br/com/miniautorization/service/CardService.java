@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,14 @@ public class CardService extends AbstractService<Card, NewCardView, NewCardForm>
 
     private final CardRepository cardRepository;
     private final CardMapperImpl cardMapper;
+
+    public Optional<NewCardView> findByNumberCard(Long numberCard) {
+        log.info(">> findByNumberCard [numberCard={}]", numberCard);
+        Optional<Card> card = cardRepository.findByNumberCard(numberCard);
+        log.info("<< findByNumberCard [card={}]", card);
+        Optional<NewCardView> view = card.map(cardMapper::entityToView);;
+        return view;
+    }
 
     @Override
     protected JpaRepository<Card, Long> getRepository() {
