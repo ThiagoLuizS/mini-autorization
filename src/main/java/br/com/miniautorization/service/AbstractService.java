@@ -4,8 +4,6 @@ import br.com.miniautorization.models.mapper.MapStructMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 @Slf4j
 public abstract class AbstractService<T, View, Form> {
 

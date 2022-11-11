@@ -2,7 +2,6 @@ package br.com.miniautorization.service;
 
 import br.com.miniautorization.models.dto.NewCardForm;
 import br.com.miniautorization.models.dto.NewCardView;
-import br.com.miniautorization.models.dto.NewTransactionCardForm;
 import br.com.miniautorization.models.entity.Card;
 import br.com.miniautorization.models.mapper.CardMapperImpl;
 import br.com.miniautorization.models.mapper.MapStructMapper;

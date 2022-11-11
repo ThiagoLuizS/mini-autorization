@@ -1,6 +1,5 @@
 package br.com.miniautorization.controller;
 
-import br.com.miniautorization.models.dto.NewCardForm;
 import br.com.miniautorization.models.dto.NewTransactionCardForm;
 import br.com.miniautorization.models.enumerators.ResultTransactionCard;
 import br.com.miniautorization.resource.TransactionResource;
