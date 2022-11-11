@@ -1,24 +1,23 @@
 package br.com.miniautorization.models.mapper;
 
-import br.com.miniautorization.models.dto.CardForm;
-import br.com.miniautorization.models.dto.CardView;
+import br.com.miniautorization.models.dto.NewCardForm;
+import br.com.miniautorization.models.dto.NewCardView;
 import br.com.miniautorization.models.entity.Card;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CardMapperImpl implements MapStructMapper<Card, CardView, CardForm> {
+public class CardMapperImpl implements MapStructMapper<Card, NewCardView, NewCardForm> {
 
     @Override
-    public CardView entityToView(Card card) {
-        return CardView.builder()
-                .id(card.getId())
+    public NewCardView entityToView(Card card) {
+        return NewCardView.builder()
                 .numberCard(card.getNumberCard())
                 .balanceCard(card.getBalanceCard())
                 .build();
     }
 
     @Override
-    public Card formToEntity(CardForm cardForm) {
+    public Card formToEntity(NewCardForm cardForm) {
         return Card.builder()
                 .numberCard(cardForm.getNumberCard())
                 .passwordCard(cardForm.getPasswordCard())

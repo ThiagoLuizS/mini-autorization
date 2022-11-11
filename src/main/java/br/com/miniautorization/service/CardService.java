@@ -1,7 +1,7 @@
 package br.com.miniautorization.service;
 
-import br.com.miniautorization.models.dto.CardForm;
-import br.com.miniautorization.models.dto.CardView;
+import br.com.miniautorization.models.dto.NewCardForm;
+import br.com.miniautorization.models.dto.NewCardView;
 import br.com.miniautorization.models.entity.Card;
 import br.com.miniautorization.models.mapper.CardMapperImpl;
 import br.com.miniautorization.models.mapper.MapStructMapper;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-public class CardService extends AbstractService<Card, CardView, CardForm> {
+public class CardService extends AbstractService<Card, NewCardView, NewCardForm> {
 
     private final CardRepository cardRepository;
     private final CardMapperImpl cardMapper;
@@ -28,7 +28,7 @@ public class CardService extends AbstractService<Card, CardView, CardForm> {
     }
 
     @Override
-    protected MapStructMapper<Card, CardView, CardForm> getConverter() {
+    protected MapStructMapper<Card, NewCardView, NewCardForm> getConverter() {
         return cardMapper;
     }
 }

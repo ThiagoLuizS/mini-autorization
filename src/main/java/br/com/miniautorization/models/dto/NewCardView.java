@@ -11,8 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardView {
-    private Long id;
+public class NewCardView {
     private Long numberCard;
     private BigDecimal balanceCard;
 }
