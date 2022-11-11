@@ -13,13 +13,6 @@ public abstract class AbstractService<T, View, Form> {
 
     protected abstract MapStructMapper<T, View, Form> getConverter();
 
-    public Optional<View> findById(Long id) {
-        log.info("findById [id={}]", id);
-        Optional<T> view = getRepository().findById(id);
-        log.info("findById [view={}]", view);
-        return view.map(getConverter()::entityToView);
-    }
-
     public View save(Form form) {
         log.debug(">> save [form={}] ", form);
         T converting = getConverter().formToEntity(form);
@@ -28,13 +21,6 @@ public abstract class AbstractService<T, View, Form> {
         log.debug("<< save [t={}] ", t);
         View view =  getConverter().entityToView(t);
         log.debug("<< save [view={}] ", view);
-        return view;
-    }
-
-    public View update(Form form) {
-        log.debug(">> update [form={}] ", form);
-        View view = save(form);
-        log.debug("<< update [view={}] ", view);
         return view;
     }
 

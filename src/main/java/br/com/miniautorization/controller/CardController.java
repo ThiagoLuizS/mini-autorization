@@ -24,7 +24,7 @@ public class CardController implements CardResource {
 
     @Override
     public ResponseEntity<BigDecimal> getBalanceCard(Long numberCard) {
-        Optional<NewCardView> newCardView = cardService.findByNumberCard(numberCard);
+        Optional<NewCardView> newCardView = cardService.findByCardViewForNumber(numberCard);
         if(newCardView.isPresent()) {
             return ResponseEntity.ok(newCardView.get().getBalanceCard());
         }
@@ -33,7 +33,7 @@ public class CardController implements CardResource {
 
     @Override
     public ResponseEntity<NewCardView> saveCard(NewCardForm cardForm) {
-        Optional<NewCardView> newCardView = cardService.findByNumberCard(cardForm.getNumberCard());
+        Optional<NewCardView> newCardView = cardService.findByCardViewForNumber(cardForm.getNumberCard());
         if(newCardView.isPresent()) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(newCardView.get());
         }

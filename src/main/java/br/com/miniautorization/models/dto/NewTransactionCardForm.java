@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionCardForm {
+public class NewTransactionCardForm {
 
     @NotBlank(message = "O número do cartão é obrigatório")
     private Long numberCard;
