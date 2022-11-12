@@ -14,9 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorView {
-
-    private LocalDateTime timestamp = LocalDateTime.now();
-    private String path;
     private Integer status;
     private String error;
     private List<String> message;

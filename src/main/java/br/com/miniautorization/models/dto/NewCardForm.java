@@ -1,12 +1,15 @@
 package br.com.miniautorization.models.dto;
 
+import br.com.miniautorization.util.ConstantsDefaultValueUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -14,11 +17,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class NewCardForm {
 
-    @NotBlank(message = "O número do cartão é obrigatório")
+    @NotNull(message = "O número do cartão é obrigatório")
     private Long numberCard;
 
-    @Size(max = 4, message = "A senha do cartão deve ter no máximo 4 digitos")
-    @NotBlank(message = "A senha do cartão é obrigatório")
+    @NotNull(message = "A senha do cartão é obrigatório")
     private Integer passwordCard;
 
+    @JsonIgnore
+    private BigDecimal balanceCard = ConstantsDefaultValueUtils.default_value;
 }

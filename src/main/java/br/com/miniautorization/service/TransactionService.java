@@ -6,6 +6,7 @@ import br.com.miniautorization.models.enumerators.ResultTransactionCard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -18,19 +19,19 @@ public class TransactionService {
 
     private final CardService cardService;
 
-    public ResultTransactionCard resultAndValidTransaction(NewTransactionCardForm newTransactionCardForm) {
+    public Mono<ResultTransactionCard> resultAndValidTransaction(NewTransactionCardForm newTransactionCardForm) {
         log.info(">> resultAndValidTransaction [newTransactionCardForm = {}]", newTransactionCardForm.getNumberCard());
         Optional<Card> card = cardService.findByNumberCard(newTransactionCardForm.getNumberCard());
         log.info("<< resultAndValidTransaction [card = {}]", card);
         if(!card.isPresent()) {
             log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.NON_EXISTING_CARD.getName());
-            return ResultTransactionCard.NON_EXISTING_CARD;
+            return Mono.just(ResultTransactionCard.NON_EXISTING_CARD);
         } else if(!Objects.equals(newTransactionCardForm.getPasswordCard(), card.get().getPasswordCard())) {
             log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.INVALID_PASSWORD.getName());
-            return ResultTransactionCard.INVALID_PASSWORD;
+            return Mono.just(ResultTransactionCard.INVALID_PASSWORD);
         } else if(card.get().getBalanceCard().compareTo(newTransactionCardForm.getBalance()) < 0) {
             log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.INSUFFICIENT_FUNDS.getName());
-            return ResultTransactionCard.INSUFFICIENT_FUNDS;
+            return Mono.just(ResultTransactionCard.INSUFFICIENT_FUNDS);
         }
 
         BigDecimal balanceUpdate = card.get().getBalanceCard().subtract(newTransactionCardForm.getBalance());
@@ -40,6 +41,6 @@ public class TransactionService {
         cardService.update(card.get());
 
         log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.OK.getName());
-        return ResultTransactionCard.OK;
+        return Mono.just(ResultTransactionCard.OK);
     }
 }

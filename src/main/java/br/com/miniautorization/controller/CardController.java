@@ -32,7 +32,7 @@ public class CardController implements CardResource {
     }
 
     @Override
-    public ResponseEntity<NewCardView> saveCard(NewCardForm cardForm) {
+    public ResponseEntity<NewCardView> saveCard(NewCardForm cardForm) throws Exception {
         Optional<NewCardView> newCardView = cardService.findByCardViewForNumber(cardForm.getNumberCard());
         if(newCardView.isPresent()) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(newCardView.get());

@@ -1,27 +1,25 @@
-package br.com.miniautorization.controller;
+package br.com.miniautorization.config.webflux;
 
 import br.com.miniautorization.models.dto.NewTransactionCardForm;
 import br.com.miniautorization.models.enumerators.ResultTransactionCard;
-import br.com.miniautorization.resource.TransactionResource;
 import br.com.miniautorization.service.TransactionService;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
-@RestController
+@Component
 @RequiredArgsConstructor
-@RequestMapping("/transacoes")
-@Api(value = "Recursos para realizar uma transação")
-public class TransactionController implements TransactionResource {
+public class TransactionHandler {
 
     private final TransactionService transactionService;
-    @Override
-    public Mono<ResponseEntity<String>> transactionCard(NewTransactionCardForm newTransactionCardForm) {
-        Mono<ResultTransactionCard> result = transactionService.resultAndValidTransaction(newTransactionCardForm);
+
+    public Mono<ResponseEntity<String>> transactionCard(ServerRequest request) {
+        Mono<NewTransactionCardForm> form = request.bodyToMono(NewTransactionCardForm.class);
+
+        Mono<ResultTransactionCard> result = transactionService.resultAndValidTransaction(form.block());
         if(result.block().getName().equals(ResultTransactionCard.OK)) {
             return Mono.just(ResponseEntity.status(HttpStatus.CREATED).body(result.block().getName()));
         }

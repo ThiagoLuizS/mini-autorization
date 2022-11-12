@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,19 +27,17 @@ public class Card {
 
     @Id
     @Column(name = "id_card")
-    @SequenceGenerator(name = "seq_id_card", sequenceName = "seq_id_card", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq_id_card")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Column(name = "number_card")
     private Long numberCard;
 
-    @NotNull
     @Column(name = "balance_card")
     private BigDecimal balanceCard;
 
-    @NotBlank
+    @NotNull
     @Column(name = "password_card")
     private Integer passwordCard;
 

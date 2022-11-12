@@ -31,7 +31,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ErrorView createListError(BindingResult bindingResult){
         return ErrorView.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .path(bindingResult.getNestedPath())
                 .message(bindingResult.getFieldErrors().stream().map(error -> messageSource.getMessage(error, LocaleContextHolder.getLocale())).collect(Collectors.toList()))
                 .error(HttpStatus.BAD_REQUEST.name()).build();
     }

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,6 @@ public interface TransactionResource {
             @ApiResponse(code = 422, message = "Alguma excessão da regra"),
             @ApiResponse(code = 201, message = "Requisição feita com sucesso")
     })
-    ResponseEntity<String> transactionCard(@Valid @RequestBody NewTransactionCardForm newTransactionCardForm);
+    Mono<ResponseEntity<String>> transactionCard(@Valid @RequestBody NewTransactionCardForm newTransactionCardForm);
 
 }

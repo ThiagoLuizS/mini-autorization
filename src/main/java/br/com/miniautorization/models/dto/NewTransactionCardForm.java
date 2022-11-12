@@ -17,11 +17,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class NewTransactionCardForm {
 
-    @NotBlank(message = "O número do cartão é obrigatório")
+    @NotNull(message = "O número do cartão é obrigatório")
     private Long numberCard;
 
-    @Size(max = 4, message = "A senha do cartão deve ter no máximo 4 digitos")
-    @NotBlank(message = "A senha do cartão é obrigatório")
+    @NotNull(message = "A senha do cartão é obrigatório")
     private Integer passwordCard;
 
     @DecimalMin(value = "0.1", message = "O valor deve ser no minimo 0.1 centavos")

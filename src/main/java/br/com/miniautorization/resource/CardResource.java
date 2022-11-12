@@ -32,6 +32,6 @@ public interface CardResource {
             @ApiResponse(code = 422, message = "Já existe um cartão com esse número"),
             @ApiResponse(code = 201, message = "Requisição feita com sucesso")
     })
-    ResponseEntity<NewCardView> saveCard(@Valid @RequestBody NewCardForm cardForm);
+    ResponseEntity<NewCardView> saveCard(@Valid @RequestBody NewCardForm cardForm) throws Exception;
 
 }

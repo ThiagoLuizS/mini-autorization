@@ -20,6 +20,7 @@ public class CardMapperImpl implements MapStructMapper<Card, NewCardView, NewCar
     public Card formToEntity(NewCardForm cardForm) {
         return Card.builder()
                 .numberCard(cardForm.getNumberCard())
+                .balanceCard(cardForm.getBalanceCard())
                 .passwordCard(cardForm.getPasswordCard())
                 .build();
     }
