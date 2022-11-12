@@ -23,5 +23,5 @@ public class NewCardForm {
     private Integer passwordCard;
 
     @JsonIgnore
-    private BigDecimal balanceCard = ConstantsDefaultValueUtils.default_value;
+    private BigDecimal balanceCard = ConstantsDefaultValueUtils.default_balance_value;
 }

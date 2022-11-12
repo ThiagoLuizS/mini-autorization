@@ -1,7 +1,7 @@
 package br.com.miniautorization.controller;
 
 import br.com.miniautorization.models.dto.NewTransactionCardForm;
-import br.com.miniautorization.models.enumerators.ResultTransactionCard;
+import br.com.miniautorization.models.enumerators.ResultTransactionCardEnum;
 import br.com.miniautorization.resource.TransactionResource;
 import br.com.miniautorization.service.TransactionService;
 import io.swagger.annotations.Api;
@@ -21,8 +21,8 @@ public class TransactionController implements TransactionResource {
     private final TransactionService transactionService;
     @Override
     public Mono<ResponseEntity<String>> transactionCard(NewTransactionCardForm newTransactionCardForm) {
-        Mono<ResultTransactionCard> result = transactionService.resultAndValidTransaction(newTransactionCardForm);
-        if(result.block().getName().equals(ResultTransactionCard.OK)) {
+        Mono<ResultTransactionCardEnum> result = transactionService.resultAndValidTransaction(newTransactionCardForm);
+        if(result.block().getName().equals(ResultTransactionCardEnum.OK.getName())) {
             return Mono.just(ResponseEntity.status(HttpStatus.CREATED).body(result.block().getName()));
         }
         return Mono.just(ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(result.block().getName()));

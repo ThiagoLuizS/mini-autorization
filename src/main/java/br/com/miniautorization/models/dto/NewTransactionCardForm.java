@@ -23,5 +23,5 @@ public class NewTransactionCardForm {
 
     @DecimalMin(value = "0.1", message = "O valor deve ser no minimo 0.1 centavos")
     @NotNull(message = "O valor da transação é obrigatório")
-    private BigDecimal balance;
+    private BigDecimal balanceCard;
 }

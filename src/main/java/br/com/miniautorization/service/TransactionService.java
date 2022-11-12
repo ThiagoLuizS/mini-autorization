@@ -2,7 +2,7 @@ package br.com.miniautorization.service;
 
 import br.com.miniautorization.models.dto.NewTransactionCardForm;
 import br.com.miniautorization.models.entity.Card;
-import br.com.miniautorization.models.enumerators.ResultTransactionCard;
+import br.com.miniautorization.models.enumerators.ResultTransactionCardEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,28 +19,28 @@ public class TransactionService {
 
     private final CardService cardService;
 
-    public Mono<ResultTransactionCard> resultAndValidTransaction(NewTransactionCardForm newTransactionCardForm) {
+    public Mono<ResultTransactionCardEnum> resultAndValidTransaction(NewTransactionCardForm newTransactionCardForm) {
         log.info(">> resultAndValidTransaction [newTransactionCardForm = {}]", newTransactionCardForm.getNumberCard());
         Optional<Card> card = cardService.findByNumberCard(newTransactionCardForm.getNumberCard());
         log.info("<< resultAndValidTransaction [card = {}]", card);
         if(!card.isPresent()) {
-            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.NON_EXISTING_CARD.getName());
-            return Mono.just(ResultTransactionCard.NON_EXISTING_CARD);
+            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCardEnum.NON_EXISTING_CARD.getName());
+            return Mono.just(ResultTransactionCardEnum.NON_EXISTING_CARD);
         } else if(!Objects.equals(newTransactionCardForm.getPasswordCard(), card.get().getPasswordCard())) {
-            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.INVALID_PASSWORD.getName());
-            return Mono.just(ResultTransactionCard.INVALID_PASSWORD);
-        } else if(card.get().getBalanceCard().compareTo(newTransactionCardForm.getBalance()) < 0) {
-            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.INSUFFICIENT_FUNDS.getName());
-            return Mono.just(ResultTransactionCard.INSUFFICIENT_FUNDS);
+            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCardEnum.INVALID_PASSWORD.getName());
+            return Mono.just(ResultTransactionCardEnum.INVALID_PASSWORD);
+        } else if(card.get().getBalanceCard().compareTo(newTransactionCardForm.getBalanceCard()) < 0) {
+            log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCardEnum.INSUFFICIENT_FUNDS.getName());
+            return Mono.just(ResultTransactionCardEnum.INSUFFICIENT_FUNDS);
         }
 
-        BigDecimal balanceUpdate = card.get().getBalanceCard().subtract(newTransactionCardForm.getBalance());
+        BigDecimal balanceUpdate = card.get().getBalanceCard().subtract(newTransactionCardForm.getBalanceCard());
 
         card.get().setBalanceCard(balanceUpdate);
 
         cardService.update(card.get());
 
-        log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCard.OK.getName());
-        return Mono.just(ResultTransactionCard.OK);
+        log.info("<< resultAndValidTransaction [ResultTransactionCard = {}]", ResultTransactionCardEnum.OK.getName());
+        return Mono.just(ResultTransactionCardEnum.OK);
     }
 }
